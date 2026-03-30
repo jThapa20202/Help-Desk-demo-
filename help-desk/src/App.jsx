@@ -1,17 +1,19 @@
-// import React from "react";
-// import Signup from "./pages/Signup";
-
-// function App() {
-//   return <Signup />; // Start with Register page
-// }
-
-// export default App;
-
-import React from "react";
-import Login from "./pages/Login"; // <-- import your login page
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 function App() {
-  return <Login />; // Show login page
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Default page → Login */}
+        <Route path="/" element={<Login />} />
+
+        {/* Signup page */}
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

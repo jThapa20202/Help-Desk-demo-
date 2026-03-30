@@ -1,36 +1,77 @@
 import { useState } from "react";
-import Logo from "/src/images/bic_logo.png";
+import { useNavigate } from "react-router-dom";
+import Logo from "../images/bic_logo.png";
+import Building from "../images/building.png";
 
 export default function Signup() {
-  const [role, setRole] = useState("student");
+  const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [faculty, setFaculty] = useState("");
+  const [level, setLevel] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [error, setError] = useState("");
+
+  const isValidEmail = (email) => {
+    return email.toLowerCase().endsWith("@bicnepal.edu.np");
+  };
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+
+    if (!name || !email || !faculty || !level || !password || !confirmPassword) {
+      setError("Please fill all fields");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setError("Only BIC institutional emails are allowed");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
+    setError("");
+    console.log("Signup success (frontend only)");
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
       <div className="w-full max-w-6xl bg-white rounded-xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
-        {/* LEFT PANEL */}
         <div
           className="relative text-white p-10 flex flex-col justify-between rounded-l-xl bg-cover bg-center"
-          style={{ backgroundImage: "url('src/images/building.png')" }}
+          style={{ backgroundImage: `url(${Building})` }}
         >
           <div
             className="absolute inset-0 rounded-l-xl"
             style={{
-              background: "linear-gradient(135deg, rgba(128,0,0,0.75), rgba(15,42,74,0.75))",
+              background:
+                "linear-gradient(135deg, rgba(128,0,0,0.75), rgba(15,42,74,0.75))",
             }}
           />
 
-          {/* Logo */}
           <div className="relative z-10 mb-6">
-            <img src={Logo} alt="College Logo" className="w-20 h-20 object-contain mb-4" />
-            <h1 className="text-4xl font-bold mb-2 leading-tight">
+            <img src={Logo} alt="College Logo" className="w-20 h-20 mb-4" />
+            <h1 className="text-3xl font-bold mb-2">
               Biratnagar International College
             </h1>
-            <p className="text-blue-200">
-              Access the centralized nexus for student support, departmental
-              coordination, and administrative oversight.
+            <p className="text-blue-200 text-sm">
+              Access the centralized nexus for student support.
             </p>
           </div>
 
@@ -45,101 +86,111 @@ export default function Signup() {
           </div>
         </div>
 
-        {/* RIGHT PANEL */}
         <div className="p-10">
           <h2 className="text-2xl font-semibold mb-2">Create Account</h2>
           <p className="text-gray-500 mb-6">
-            Select your institutional role to begin your journey.
+            Enter your institutional details.
           </p>
 
-          {/* FORM */}
-          <form className="space-y-4">
+          <form onSubmit={handleSignup} className="space-y-4">
 
-            {/* STUDENT FORM ONLY */}
-            {role === "student" && (
-              <>
-                <div>
-                  <label className="text-xs text-gray-500">FULL NAME</label>
-                  <input
-                    type="text"
-                    placeholder="Student Name"
-                    className="w-full mt-1 p-3 rounded-lg bg-gray-100 focus:outline-none"
-                  />
-                </div>
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full p-3 rounded-lg bg-gray-100"
+            />
 
-                <div>
-                  <label className="text-xs text-gray-500">INSTITUTIONAL EMAIL</label>
-                  <input
-                    type="email"
-                    placeholder="studentID@bicnepal.edu.np"
-                    className="w-full mt-1 p-3 rounded-lg bg-gray-100 focus:outline-none"
-                  />
-                </div>
+            <input
+              type="email"
+              placeholder="student@bicnepal.edu.np"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-3 rounded-lg bg-gray-100"
+            />
 
-                <div>
-                  <label className="text-xs text-gray-500">FACULTY</label>
-                  <select className="w-full mt-1 p-3 rounded-lg bg-gray-100 focus:outline-none">
-                    <option>Select your faculty</option>
-                    <option>Computer Science</option>
-                    <option>Business</option>
-                    <option>Cyber Security</option>
-                  </select>
-                </div>
+            <select
+              value={faculty}
+              onChange={(e) => setFaculty(e.target.value)}
+              className="w-full p-3 rounded-lg bg-gray-100"
+            >
+              <option value="">Select Faculty</option>
+              <option>Computer Science</option>
+              <option>Business</option>
+              <option>Cyber Security</option>
+            </select>
 
-                <div>
-                  <label className="text-xs text-gray-500">LEVEL</label>
-                  <select className="w-full mt-1 p-3 rounded-lg bg-gray-100 focus:outline-none">
-                    <option>Level 3</option>
-                    <option>Level 4</option>
-                    <option>Level 5</option>
-                    <option>Level 6</option>
-                  </select>
-                </div>
+            <select
+              value={level}
+              onChange={(e) => setLevel(e.target.value)}
+              className="w-full p-3 rounded-lg bg-gray-100"
+            >
+              <option value="">Select Level</option>
+              <option>Level 3</option>
+              <option>Level 4</option>
+              <option>Level 5</option>
+              <option>Level 6</option>
+            </select>
 
-                <div>
-                  <label className="text-xs text-gray-500">PASSWORD</label>
-                  <div className="relative">
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      className="w-full mt-1 p-3 rounded-lg bg-gray-100 focus:outline-none"
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-3 top-3 text-sm text-blue-600"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? "Hide" : "Show"}
-                    </button>
-                  </div>
-                </div>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-3 rounded-lg bg-gray-100"
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-3 text-sm text-blue-600"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
 
-                <div>
-                  <label className="text-xs text-gray-500">CONFIRM PASSWORD</label>
-                  <div className="relative">
-                    <input
-                      type={showConfirmPassword ? "text" : "password"}
-                      className="w-full mt-1 p-3 rounded-lg bg-gray-100 focus:outline-none"
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-3 top-3 text-sm text-blue-600"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    >
-                      {showConfirmPassword ? "Hide" : "Show"}
-                    </button>
-                  </div>
-                </div>
-              </>
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full p-3 rounded-lg bg-gray-100"
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-3 text-sm text-blue-600"
+                onClick={() =>
+                  setShowConfirmPassword(!showConfirmPassword)
+                }
+              >
+                {showConfirmPassword ? "Hide" : "Show"}
+              </button>
+            </div>
+
+            {error && (
+              <p className="text-red-500 text-sm text-center">
+                {error}
+              </p>
             )}
 
-            <button className="w-full bg-blue-900 text-white py-3 rounded-lg mt-4 hover:bg-blue-800 transition">
+            <button
+              type="submit"
+              className="w-full bg-blue-900 text-white py-3 rounded-lg hover:bg-blue-800 transition"
+            >
               Create Account →
             </button>
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-6">
-            Already have an institutional account?{" "}
-            <span className="text-red-500 cursor-pointer">Sign In</span>
+            Already have an account?{" "}
+            <span
+              onClick={() => navigate("/")}
+              className="text-red-500 cursor-pointer hover:underline"
+            >
+              Sign In
+            </span>
           </p>
         </div>
       </div>
