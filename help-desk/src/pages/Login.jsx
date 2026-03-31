@@ -130,7 +130,7 @@ export default function Login() {
               onClick={handleLogin}
               className="w-full py-3 rounded-xl font-semibold text-white bg-blue-900 hover:bg-blue-800 transition"
             >
-              Sign In →
+              Sign In 
             </button>
 
             {/* SIGNUP LINK */}
@@ -140,7 +140,7 @@ export default function Login() {
                 onClick={() => navigate("/signup")}
                 className="text-blue-900 font-semibold cursor-pointer hover:underline"
               >
-                Request Access
+                Sign Up
               </span>
             </p>
           </div>
