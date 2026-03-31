@@ -66,7 +66,7 @@ export default function Login() {
 
             {/* EMAIL */}
             <div>
-              <p className="text-xs font-semibold text-gray-400 uppercase mb-1.5">
+              <p className="text-xs font-semibold text-black-400 uppercase mb-1.5">
                 Email or Institutional ID
               </p>
               <div className="flex items-center gap-3 bg-gray-100 rounded-xl px-4 py-3">
@@ -82,7 +82,7 @@ export default function Login() {
 
             {/* PASSWORD */}
             <div>
-              <p className="text-xs font-semibold text-gray-400 uppercase mb-1.5">
+              <p className="text-xs font-semibold text-black-400 uppercase mb-1.5">
                 Password
               </p>
               <div className="flex items-center gap-3 bg-gray-100 rounded-xl px-4 py-3">
